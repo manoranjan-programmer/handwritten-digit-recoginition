@@ -1,0 +1,7 @@
+.env
+.env.example
+venv
+Dockerfile
+.dockerignore
+model_cache
+__pycache__
