@@ -1,41 +1,4 @@
-/**
- * api.js
- * ------
- * Centralised API service layer for the Digit Recognition frontend.
- *
- * Design decisions
- * ----------------
- * • A single Axios instance is created with a configurable base URL so the
- *   same code works locally (localhost:8000) and on Vercel (production URL).
- * • Request / response interceptors handle logging and normalise errors so
- *   callers always receive a plain Error with a human-readable message.
- * • The public surface is a single named export: `predictDigit(file)`.
- *   Adding more API calls in the future means adding one function here.
- *
- * Environment variables
- * ---------------------
- * VITE_API_URL   — base URL of the FastAPI backend (default: http://localhost:8000)
- *
- * Usage
- * -----
- *   import { predictDigit } from '../services/api.js';
- *
- *   const result = await predictDigit(file);
- *   // { digit: 7, confidence: 99.42, inference_time_ms: 12.5 }
- */
-
 import axios from 'axios';
-
-// ---------------------------------------------------------------------------
-// Axios instance
-// ---------------------------------------------------------------------------
-
-/**
- * Base URL resolution order:
- *  1. VITE_API_URL environment variable (set in .env or Vercel dashboard)
- *  2. Empty string — falls through to the Vite dev-server proxy ("/predict")
- *     which proxies to localhost:8000 during development.
- */
 const BASE_URL = import.meta.env.VITE_API_URL ?? '';
 
 const apiClient = axios.create({
